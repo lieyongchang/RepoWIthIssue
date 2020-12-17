@@ -1,0 +1,120 @@
+<!DOCTYPE html>
+<html xmlns:th="https://www.thymeleaf.org"
+	  th:replace="~{fragments/layout :: layout (~{::body},'users')}"
+	  xmlns:sec="http://www.thymeleaf.org/thymeleaf-extras-springsecurity4">
+<body>
+	<!-- <div th:insert="fragments/loginfooterv :: loginfooter"></div> -->
+	<img src="../static/resources/images/companylogo.png"
+		th:src="@{/resources/images/companylogo.png}" />
+	<h2>User</h2>
+	
+	  <div class="starter-template">
+
+    </div>
+	
+	<table id="users" class="table table-bordered table-responsive "
+		style="width: 100%">
+		<thead>
+			<tr>
+				<th>ID</th>
+				<th>Name</th>
+				<th>Age</th>
+				<th>Gender</th>
+				<th>Country</th>
+				<th>Email</th>
+				<th>Mobile</th>
+				<th>Contact</th>
+				<th>Birthdate</th>
+				<th></th>
+				<th></th>
+			</tr>
+		</thead>
+		<tbody>
+			 <tr>
+				<td></td>
+				<td></td>
+				<td></td>
+				<td></td>
+				<td></td>
+				<td></td>
+				<td></td>
+				<td></td>
+				<td></td>
+				<td></td>
+				<td></td>
+			</tr>
+		</tbody>
+	</table>
+	<script>
+	
+	 $(document).ready(function() {	
+		
+		var table = $('#users').DataTable({
+			 	"dom": 'Bfrtip',
+			 	"buttons": [
+			        'copy', 'csv','excel', 'pdf'
+			    ],
+				"processing" : true,
+				/* "serverSide" : true, */
+				"responsive": true,
+				"ajax" : {
+					"url" : "findall",
+					"dataSrc":"",
+					"type" : "POST",
+					"dataType" : "json",
+					"contentType" : "application/json",
+					"data" : function(d) {
+						/* console.log("data: ", d); */
+						return JSON.stringify(d);
+					}
+				},
+				 "columns": [
+					 	{"data": "id", "sortable": false},
+			            {"data": "name"},
+			            {"data": "age"},
+			            {"data": "gender"},
+			            {"data": "country", "sortable": false},
+			            {"data": "email", "sortable": false},
+			            {"data": "mobile", "sortable": false},
+			            {"data": "contact", "sortable": false},
+			            {"render":function(data){
+			                return moment(data).format('DD/MM/YYYY');
+			              }, "sortable": false
+			            },
+			            /* {"data": "birthdate"}, */
+			            {"mRender": function ( data, type, row ) {
+			            	/*   return data = '<a href=/edit/'  + row.id +'>Edit</a>'}, */
+			            	  return '<a href=/edit/'  + row.id +'>Edit</a>'},
+	                        "sortable": false
+	                	},
+			            {"mRender": function ( data, type, row ) {
+	                        return '<a href=/delete/'  + row.id +'>Delete</a>'},
+	                	 "sortable": false
+	                	}
+			        ]
+					
+			    });	
+		
+		
+          // search via gender
+	/* 	 $('input').keyup(function() {
+		   table.search(this.value).draw();
+		 } ); */
+		
+	  });
+
+</script>
+   <footer th:fragment="footer" style="position: relative; height: 150px;  width: 100%;">
+        <div id="footer"
+			style="position: absolute; width: 100%; line-height: 40px; text-align: center; bottom: 0;">
+			 Copyright &copy; <script>document.write(new Date().getFullYear())</script> PretendCo.
+			  <span sec:authorize="isAuthenticated()">
+                | Logged user: <span sec:authentication="name"></span> |
+                Roles: <span sec:authentication="principal.authorities"></span> |
+                <a th:href="@{/logout}">Sign Out</a>
+            </span>
+			<!-- <a th:href="@{/logout}">| Sign Out</a> -->
+		</div>			 
+    </footer>
+</body>
+</html>

@@ -1,0 +1,39 @@
+<!DOCTYPE html>
+<html xmlns:th="https://www.thymeleaf.org"
+	th:replace="~{fragments/layout :: layout (~{::body},'error')}">
+<head>
+<meta charset="ISO-8859-1">
+<title>Registration Success</title>
+
+<style type="text/css">
+span {
+	display: inline-block;
+	width: 200px;
+	text-align: left;
+}
+</style>
+</head>
+<body>
+	<div align="center">
+		<h2>Registration Succeeded!</h2>
+		<span>Name:</span> <span th:text="${user.name}"> </span> <br /> <span>Age:
+		</span> <span th:text="${user.age}"></span> <br /> <span>Gender: </span> <span
+			th:text="${user.gender}"></span> <br /> <span>Country: </span> <span
+			th:text="${user.country}"></span> <br /> <span>Mobile: </span> <span
+			th:text="${user.mobile}"></span> <br /> <span>Email: </span> <span
+			th:text="${user.email}"></span> <br /> <span>Contact: </span> <span
+			th:text="${user.contact}"></span> <br />
+			<!-- <span>Birthdate: </span><span th:text="${user.birthdate}"></span> -->
+			 <span>Date of Birth: </span> <span
+			th:text="${#dates.format(user.birthdate, 'dd/MM/yyyy')}"></span> <br />
+<!-- 			<span>Date of Birth: </span> <span
+			th:text="${user.birtdate}"></span> <br /> -->
+	</div>
+	<script>
+		var timer = setTimeout(function() {
+			window.location = 'http://localhost:8080/'
+		}, 5000);
+	</script>
+	<div th:insert="fragments/footer :: footer"></div>
+</body>
+</html>
