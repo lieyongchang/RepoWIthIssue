@@ -13,25 +13,21 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-package com.visit;
 
-import java.util.List;
+package com;
 
-import org.springframework.dao.DataAccessException;
-import org.springframework.data.repository.Repository;
+import org.springframework.boot.SpringApplication;
+import org.springframework.boot.autoconfigure.SpringBootApplication;
 
-import com.model.BaseEntity;
+@SpringBootApplication(exclude = {
+		org.springframework.boot.autoconfigure.security.servlet.SecurityAutoConfiguration.class,
+		org.springframework.boot.actuate.autoconfigure.security.servlet.ManagementWebSecurityAutoConfiguration.class })
 
-public interface VisitRepository extends Repository<Visit, Integer> {
+//@SpringBootApplication
+public class RepoWithIssue {
 
-	/**
-	 * Save a <code>Visit</code> to the data store, either inserting or updating it.
-	 * 
-	 * @param visit the <code>Visit</code> to save
-	 * @see BaseEntity#isNew
-	 */
-	void save(Visit visit) throws DataAccessException;
-
-	List<Visit> findByPetId(Integer petId);
+	public static void main(String[] args) {
+		SpringApplication.run(RepoWithIssue.class, args);
+	}
 
 }
