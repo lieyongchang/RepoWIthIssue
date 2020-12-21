@@ -28,12 +28,12 @@ public class UserController {
 
 	/**
 	 * List all the user from the database
-	 *
+	 * 
 	 * @param model
 	 * @return
 	 */
 	@RequestMapping(value = "/userList")
-	public String listUserInfo(Model model) {
+	public String ListUserInfo(Model model) {
 
 		model.addAttribute("userlist", userInfoService.getUser());
 		return "/user/userList";
@@ -42,7 +42,7 @@ public class UserController {
 
 	/**
 	 * This will show the update-user.html
-	 *
+	 * 
 	 * @param id
 	 * @param model
 	 * @return
@@ -56,7 +56,7 @@ public class UserController {
 
 	/**
 	 * Update user
-	 *
+	 * 
 	 * @param id
 	 * @param user
 	 * @param result
@@ -73,7 +73,7 @@ public class UserController {
 
 	/**
 	 * Delete user
-	 *
+	 * 
 	 * @param id
 	 * @param model
 	 * @return

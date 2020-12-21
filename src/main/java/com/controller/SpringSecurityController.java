@@ -8,19 +8,18 @@ import org.springframework.web.bind.annotation.RequestMethod;
 public class SpringSecurityController {
 
 	@RequestMapping(value = "/login", method = RequestMethod.GET)
-	public String loginPage(/* Model model, HttpServletRequest request */) {
+	public String LoginPage(/* Model model, HttpServletRequest request */) {
 
 		// if (request.isUserInRole("ROLE_ADMIN")) {
 		// redirect to indexAdmin.html page
 		// return "user/userList";
 		// }
 		return "login";
-
 	}
-
-//	@RequestMapping(value = "/login", method = RequestMethod.POST)
+//
+//	@RequestMapping(value = "/userList", method = RequestMethod.POST)
 //	public String successPage() {
-//		return "/user/userList";
+//		return "login";
 //
 //	}
 }

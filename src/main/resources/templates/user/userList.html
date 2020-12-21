@@ -9,10 +9,10 @@
 	<img src="../static/resources/images/companylogo.png"
 		th:src="@{/resources/images/companylogo.png}" />
 	<h2>User</h2>
-	
-	
+	<h1 th:inline="text">Hello [[${#httpServletRequest.remoteUser}]]!</h1>
+	<!-- <sec:logout logout-success-url="/logout" invalidate-session="false" delete-cookies="JESSIONID" /> -->
 	<!-- This is the part where i say this is admin page -->
-	 <div class="starter-template"  sec:authorize="hasRole('ROLE_ADMIN')">
+ 	 <!-- <div class="starter-template"  sec:authorize="hasRole('ROLE_ADMIN')">
 
     </div>
     
@@ -20,8 +20,8 @@
 	<div sec:authentication="name">
 	    The value of the "name" property of the authentication object should appear here.
 	</div> 
-	
-	<!--  -->
+ -->
+
 	
 	<table id="users" class="table table-bordered table-responsive "
 		style="width: 100%">
@@ -36,6 +36,7 @@
 				<th>Mobile</th>
 				<th>Contact</th>
 				<th>Birthdate</th>
+				<th>Feedback</th>
 				<th></th>
 				<th></th>
 			</tr>
@@ -53,11 +54,33 @@
 				<td></td>
 				<td></td>
 				<td></td>
+				<td></td>
 			</tr>
 		</tbody>
 	</table>
 	<script>
 	
+	
+	var IdealTimeOut = 60; //10 seconds
+    var idleSecondsTimer = null;
+    var idleSecondsCounter = 0;
+    const redirectUrl = '/logout';  // Redirect idle users to this URL
+    document.onclick = function () { idleSecondsCounter = 0; };
+    document.onmousemove = function () { idleSecondsCounter = 0; };
+    document.onkeypress = function () { idleSecondsCounter = 0; };
+    idleSecondsTimer = window.setInterval(CheckIdleTime, 1000);
+
+    function CheckIdleTime() {
+        idleSecondsCounter++;
+        if (idleSecondsCounter >= IdealTimeOut) {
+            window.clearInterval(idleSecondsTimer);
+            alert("Your Session has expired. Please login again.");
+          //  window.location = "https://www.aspsnippets.com/";
+            location.href = redirectUrl;
+        }
+    }	 
+	
+	// this is logic that renders all the information on the table
 	 $(document).ready(function() {	
 		
 		var table = $('#users').DataTable({
@@ -88,11 +111,17 @@
 			            {"data": "email", "sortable": false},
 			            {"data": "mobile", "sortable": false},
 			            {"data": "contact", "sortable": false},
+			            /* {"data": "birthdate"}, */
 			            {"render":function(data){
 			                return moment(data).format('DD/MM/YYYY');
 			              }, "sortable": false
 			            },
-			            /* {"data": "birthdate"}, */
+			            /* {"Mesage"}, */
+			            {"data": "message", 
+			            	     "sortable": false,
+			            		 "render": function(data, type, row){
+			            	 			return '<a href=/edit/' + row.id +'><i class="fa fa-file-text-o" aria-hidden="true" style="position:absolute;left:84.5%"></i></a>'}
+			            },
 			            {"mRender": function ( data, type, row ) {
 			            	/*   return data = '<a href=/edit/'  + row.id +'>Edit</a>'}, */
 			            	  return '<a href=/edit/'  + row.id +'>Edit</a>'},
@@ -119,9 +148,8 @@
         <div id="footer"
 			style="position: absolute; width: 100%; line-height: 40px; text-align: center; bottom: 0;">
 			 Copyright &copy; <script>document.write(new Date().getFullYear())</script> PretendCo.
-			  <span sec:authorize="isAuthenticated()">
-                <a th:href="@{/login}">Sign Out</a>
-            </span>
+			 <a th:href="@{/logout}">Sign Out</a>
+			 <!--  <span sec:authorize="isAuthenticated()"> </span> -->
 			<!-- <a th:href="@{/logout}">| Sign Out</a> -->
 		</div>			 
     </footer>
