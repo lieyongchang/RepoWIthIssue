@@ -6,6 +6,7 @@ import javax.servlet.ServletException;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
+import org.springframework.context.annotation.Configuration;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
 import org.springframework.security.config.annotation.web.configuration.EnableWebSecurity;
 import org.springframework.security.config.annotation.web.configuration.WebSecurityConfigurerAdapter;
@@ -14,9 +15,16 @@ import org.springframework.security.web.authentication.AuthenticationSuccessHand
 
 //@Configurable
 //@Configuration
-@EnableWebSecurity
-public class SpringSecurityConfig extends WebSecurityConfigurerAdapter {
+//@EnableWebSecurity
 
+/**
+ * By using the default spring security and specified the username and password
+ * in the application.properties (not secure)
+ * you do not need to to implement this class
+ */
+
+public class SpringSecurityConfig { // extends WebSecurityConfigurerAdapter {
+/*
 	// roles admin allow to access /admin/**
 	// roles user allow to access /user/**
 	// custom 403 access denied handler
@@ -50,4 +58,5 @@ public class SpringSecurityConfig extends WebSecurityConfigurerAdapter {
 		http.headers().frameOptions().disable();
 		http.sessionManagement().maximumSessions(1).expiredUrl("/login?expired=true");
 	}
+*/
 }
